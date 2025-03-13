@@ -1,0 +1,38 @@
+{
+  "name": "hdc-install-server",
+  "version": "1.0.0",
+  "description": "HDC Install Server for application installation on devices",
+  "main": "dist/bootstrap.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./bootstrap.js",
+    "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
+    "test": "midway-bin test --ts",
+    "cov": "midway-bin cov --ts",
+    "lint": "eslint .",
+    "ci": "npm run cov",
+    "build": "midway-bin build -c",
+    "pm2": "pm2 start ecosystem.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@midwayjs/bootstrap": "^3.20.3",
+    "@midwayjs/core": "^3.20.3",
+    "@midwayjs/decorator": "^3.20.3",
+    "@midwayjs/koa": "^3.20.3",
+    "@midwayjs/logger": "^3.4.2",
+    "@midwayjs/validate": "^3.20.3",
+    "axios": "^1.8.3",
+    "node-schedule": "^2.1.1",
+    "pm2": "^5.4.3"
+  },
+  "devDependencies": {
+    "@midwayjs/cli": "^2.1.1",
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.13.10",
+    "cross-env": "^7.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
