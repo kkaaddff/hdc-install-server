@@ -1,9 +1,10 @@
 import { exec } from 'child_process'
 import { promisify } from 'util'
-import { Config } from '@midwayjs/decorator'
+import { Config, Provide } from '@midwayjs/decorator'
 
 const execAsync = promisify(exec)
 
+@Provide()
 export class HdcUtil {
   @Config('hdc')
   hdcConfig

@@ -1,4 +1,4 @@
-import { Config } from '@midwayjs/decorator'
+import { Config, Provide } from '@midwayjs/decorator'
 import * as fs from 'fs'
 import * as path from 'path'
 import axios from 'axios'
@@ -7,11 +7,11 @@ import { promisify } from 'util'
 import { CacheInfo } from '../interface'
 
 const fsExists = promisify(fs.exists)
-const fsMkdir = promisify(fs.mkdir)
 const fsReaddir = promisify(fs.readdir)
 const fsStat = promisify(fs.stat)
 const fsUnlink = promisify(fs.unlink)
 
+@Provide()
 export class DownloadUtil {
   @Config('cache')
   cacheConfig
@@ -22,9 +22,6 @@ export class DownloadUtil {
    * @returns Path to the downloaded file
    */
   async downloadFile(url: string): Promise<string> {
-    // Ensure cache directory exists
-    await this.ensureCacheDir()
-
     // Extract filename from URL
     const fileName = this.getFileNameFromUrl(url)
     const filePath = path.join(this.cacheConfig.dir, fileName)
@@ -64,15 +61,6 @@ export class DownloadUtil {
   }
 
   /**
-   * Ensure the cache directory exists
-   */
-  private async ensureCacheDir(): Promise<void> {
-    if (!(await fsExists(this.cacheConfig.dir))) {
-      await fsMkdir(this.cacheConfig.dir, { recursive: true })
-    }
-  }
-
-  /**
    * Extract filename from URL
    * @param url URL
    * @returns Filename
@@ -94,8 +82,6 @@ export class DownloadUtil {
    * Clean old files from the cache directory
    */
   async cleanCache(): Promise<void> {
-    await this.ensureCacheDir()
-
     const now = Date.now()
     const maxAge = this.cacheConfig.maxAge
 
@@ -122,8 +108,6 @@ export class DownloadUtil {
    * @returns Array of cache file information
    */
   async getCacheInfo(): Promise<CacheInfo[]> {
-    await this.ensureCacheDir()
-
     try {
       const files = await fsReaddir(this.cacheConfig.dir)
       const cacheInfo: CacheInfo[] = []

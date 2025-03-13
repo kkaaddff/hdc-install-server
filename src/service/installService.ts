@@ -30,6 +30,7 @@ export class InstallService {
       }
 
       try {
+        debugger
         // Download the application
         console.log(`Downloading application from ${installDto.appUrl}`)
         const appPath = await this.downloadUtil.downloadFile(installDto.appUrl)
