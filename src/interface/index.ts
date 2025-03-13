@@ -1,5 +1,5 @@
 export interface InstallAppDTO {
-  appUrl: string
+  downloadUrl: string
   deviceIp: string
   devicePort: number
 }

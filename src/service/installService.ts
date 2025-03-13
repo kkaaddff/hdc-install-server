@@ -1,16 +1,15 @@
 import { Provide, Inject } from '@midwayjs/decorator'
 import { HdcUtil } from '../util/hdcUtil'
-import { DownloadUtil } from '../util/downloadUtil'
 import { LockUtil } from '../util/lockUtil'
 import { InstallAppDTO, InstallResult } from '../interface'
+import fs from 'fs'
+import path from 'path'
+import extract from 'extract-zip'
 
 @Provide()
 export class InstallService {
   @Inject()
   hdcUtil: HdcUtil
-
-  @Inject()
-  downloadUtil: DownloadUtil
 
   /**
    * Install an application on a device
@@ -30,12 +29,55 @@ export class InstallService {
       }
 
       try {
-        debugger
-        // Download the application
-        console.log(`Downloading application from ${installDto.appUrl}`)
-        const appPath = await this.downloadUtil.downloadFile(installDto.appUrl)
+        //  "downloadUrl": "/filesCache/YMMShipper_debug_origin/release-20250327_49_1741861703663.zip"
+        console.log(`Install application from ${installDto.downloadUrl}`)
 
+        // Get the absolute path of the zip file
+        const zipFilePath = path.join(process.cwd(), installDto.downloadUrl)
+        const extractDir = path.dirname(zipFilePath)
+
+        // Create extraction directory if it doesn't exist
+        if (!fs.existsSync(extractDir)) {
+          // Extract the zip file
+          console.log(`Extracting ${zipFilePath} to ${extractDir}`)
+          await extract(zipFilePath, { dir: extractDir })
+        }
+
+        // Find all .hap files in the extracted directory
+        let hapFile = null
+
+        const findHapFile = (dir: string) => {
+          if (hapFile) return
+
+          const files = fs.readdirSync(dir)
+
+          for (const file of files) {
+            if (hapFile) return
+
+            const filePath = path.join(dir, file)
+            const stat = fs.statSync(filePath)
+
+            if (stat.isDirectory()) {
+              findHapFile(filePath)
+            } else if (path.extname(file).toLowerCase() === '.hap') {
+              hapFile = filePath
+              return
+            }
+          }
+        }
+
+        findHapFile(extractDir)
+
+        if (!hapFile) {
+          throw new Error('No .hap file found in the extracted package')
+        }
+
+        console.log(`Found .hap file: ${hapFile}`)
+
+        // Use the found .hap file for installation
+        const appPath = hapFile
         // Install the application on the device
+        console.log(`Using ${appPath} for installation`)
         console.log(
           `Installing application to device ${installDto.deviceIp}:${installDto.devicePort}`
         )
@@ -44,9 +86,6 @@ export class InstallService {
           installDto.deviceIp,
           installDto.devicePort
         )
-
-        // Disconnect from the device
-        await this.hdcUtil.disconnectDevice(installDto.deviceIp, installDto.devicePort)
 
         return {
           success: true,
@@ -84,14 +123,12 @@ export class InstallService {
   /**
    * Clean the cache
    */
-  async cleanCache(): Promise<void> {
-    await this.downloadUtil.cleanCache()
-  }
+  async cleanCache(): Promise<void> {}
 
   /**
    * Get cache information
    */
   async getCacheInfo() {
-    return this.downloadUtil.getCacheInfo()
+    return []
   }
 }

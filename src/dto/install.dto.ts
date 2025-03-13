@@ -3,7 +3,7 @@ import { InstallAppDTO } from '../interface'
 
 export class InstallAppDTOValidate implements InstallAppDTO {
   @Rule(RuleType.string().required().uri())
-  appUrl: string
+  downloadUrl: string
 
   @Rule(RuleType.string().required().ip())
   deviceIp: string

@@ -30,7 +30,8 @@
     "pm2": "^5.4.3",
     "sqlite3": "^5.1.7",
     "swagger-ui-dist": "^4.2.1",
-    "typeorm": "~0.3.0"
+    "typeorm": "~0.3.0",
+    "extract-zip": "^2.0.1"
   },
   "devDependencies": {
     "@midwayjs/mock": "^3.12.0",

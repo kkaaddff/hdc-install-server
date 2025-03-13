@@ -1,24 +1,20 @@
 import { exec } from 'child_process'
 import { promisify } from 'util'
-import { Config, Provide } from '@midwayjs/decorator'
+import { Provide } from '@midwayjs/decorator'
 
 const execAsync = promisify(exec)
 
 @Provide()
 export class HdcUtil {
-  @Config('hdc')
-  hdcConfig
-
   /**
    * Execute HDC command
    * @param args Command arguments
    * @returns Command output
    */
-  async executeCommand(args: string): Promise<string> {
-    const command = `${this.hdcConfig.command} ${args}`
+  async executeCommand(command: string): Promise<string> {
     try {
       const { stdout, stderr } = await execAsync(command, {
-        timeout: this.hdcConfig.timeout,
+        timeout: 10000,
       })
 
       if (stderr) {
@@ -38,7 +34,7 @@ export class HdcUtil {
    * @param port Device port
    */
   async connectDevice(ip: string, port: number): Promise<void> {
-    await this.executeCommand(`connect ${ip}:${port}`)
+    await this.executeCommand(`hdc tconn ${ip}:${port}`)
   }
 
   /**
@@ -52,7 +48,9 @@ export class HdcUtil {
     await this.connectDevice(deviceIp, devicePort)
 
     // Install the application
-    const result = await this.executeCommand(`-t ${deviceIp}:${devicePort} install ${appPath}`)
+    const result = await this.executeCommand(`hdc install ${appPath}`)
+    // Disconnect from the device
+    await this.disconnectDevice(deviceIp, devicePort)
     return result
   }
 
@@ -62,6 +60,6 @@ export class HdcUtil {
    * @param port Device port
    */
   async disconnectDevice(ip: string, port: number): Promise<void> {
-    await this.executeCommand(`disconnect ${ip}:${port}`)
+    await this.executeCommand(`hdc tconn ${ip}:${port} -remove`)
   }
 }

@@ -12,7 +12,7 @@ export class LockUtil {
    * Acquire a lock
    * @returns Promise that resolves when the lock is acquired
    */
-  static async acquireLock(timeout = 60000): Promise<boolean> {
+  static async acquireLock(timeout = 10 * 60 * 1000): Promise<boolean> {
     // If not locked, acquire immediately
     if (!this.isLocked) {
       this.isLocked = true

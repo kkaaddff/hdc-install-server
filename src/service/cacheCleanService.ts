@@ -1,11 +1,7 @@
-import { Provide, Inject, Init, Config } from '@midwayjs/decorator'
-import { DownloadUtil } from '../util/downloadUtil'
+import { Provide, Init, Config } from '@midwayjs/decorator'
 
 @Provide()
 export class CacheCleanService {
-  @Inject()
-  downloadUtil: DownloadUtil
-
   @Config('cache')
   cacheConfig
 
@@ -23,7 +19,6 @@ export class CacheCleanService {
   async cleanCache(): Promise<void> {
     try {
       console.log('Starting cache cleaning...')
-      await this.downloadUtil.cleanCache()
       console.log('Cache cleaning completed')
     } catch (error) {
       console.error(`Error cleaning cache: ${error.message}`)

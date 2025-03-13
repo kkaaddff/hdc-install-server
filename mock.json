@@ -1,5 +1,5 @@
 {
-  "appUrl": "https://dev-phantom-jenkins-00.amh-group.com/view/%E9%B8%BF%E8%92%99/job/MBLogisticsApp/lastSuccessfulBuild/artifact/products/YMMShipperEntry/build/YMMShipper/outputs/YMMShipper/YMMShipperEntry-YMMShipper-signed.hap",
+  "downloadUrl": "/filesCache/YMMShipper_debug_origin/release-20250327_49_1741861703663.zip",
   "deviceIp": "192.168.1.1",
   "devicePort": 8080
 }

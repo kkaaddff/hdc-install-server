@@ -23,7 +23,6 @@ export class InstallController {
   @ApiOperation({ summary: '安装 App 应用' })
   @Post('/install')
   async install(@Body() installDto: InstallAppDTO) {
-    debugger
     const result = await this.installService.installApp(installDto)
     return result
   }
