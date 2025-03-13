@@ -11,10 +11,10 @@ export class HdcUtil {
    * @param args Command arguments
    * @returns Command output
    */
-  async executeCommand(command: string): Promise<string> {
+  async executeCommand(command: string, timeout = 10 * 1000): Promise<string> {
     try {
       const { stdout, stderr } = await execAsync(command, {
-        timeout: 10000,
+        timeout,
       })
 
       if (stderr) {
@@ -35,6 +35,7 @@ export class HdcUtil {
    */
   async connectDevice(ip: string, port: number): Promise<void> {
     await this.executeCommand(`hdc tconn ${ip}:${port}`)
+    console.log(`Device connected: ${ip}:${port}`)
   }
 
   /**
@@ -48,9 +49,8 @@ export class HdcUtil {
     await this.connectDevice(deviceIp, devicePort)
 
     // Install the application
-    const result = await this.executeCommand(`hdc install ${appPath}`)
-    // Disconnect from the device
-    await this.disconnectDevice(deviceIp, devicePort)
+    const result = await this.executeCommand(`hdc install ${appPath}`, 10 * 60 * 1000)
+    console.log(`Application installed: ${appPath}`)
     return result
   }
 
@@ -61,5 +61,6 @@ export class HdcUtil {
    */
   async disconnectDevice(ip: string, port: number): Promise<void> {
     await this.executeCommand(`hdc tconn ${ip}:${port} -remove`)
+    console.log(`Device disconnected: ${ip}:${port}`)
   }
 }

@@ -62,7 +62,7 @@ export class BuildController {
           buildNumber: record.buildNumber,
           fileName: record.fileName,
           createdAt: record.createdAt,
-          downloadUrl: `/filesCache/${record.fileName}`,
+          downloadUrl: `/files-cache/${record.fileName}`,
         })),
         total: result.total,
         page: query.page || 1,

@@ -93,6 +93,8 @@ export class InstallService {
           appPath,
         }
       } finally {
+        // Disconnect from the device
+        this.hdcUtil.disconnectDevice(installDto.deviceIp, installDto.devicePort)
         // Always release the lock
         LockUtil.releaseLock()
       }
