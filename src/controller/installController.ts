@@ -1,8 +1,9 @@
-import { Inject, Controller, Post, Get, Body } from '@midwayjs/decorator'
+import { Body, Controller, Get, Inject, Post } from '@midwayjs/decorator'
 import { Context } from '@midwayjs/koa'
-import { InstallService } from '../service/installService'
-import { InstallAppDTO } from '../interface'
 import { ApiOperation } from '@midwayjs/swagger'
+import { InstallAppDTO } from '../interface'
+import { InstallService } from '../service/installService'
+import { BuildController } from './buildController'
 
 @Controller('/api')
 export class InstallController {
@@ -11,6 +12,9 @@ export class InstallController {
 
   @Inject()
   installService: InstallService
+
+  @Inject()
+  buildController: BuildController
 
   /**
    * Install an application on a device

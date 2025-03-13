@@ -15,3 +15,22 @@ export interface CacheInfo {
   fileName: string
   createdAt: number
 }
+
+export interface BuildRecordInfo {
+  id: number
+  appName: string
+  buildType: string
+  branch: string
+  buildTime: Date
+  buildNumber: string
+  fileName: string
+  createdAt: Date
+  downloadUrl: string
+}
+
+export interface BuildQueryResult {
+  records: BuildRecordInfo[]
+  total: number
+  page: number
+  pageSize: number
+}
