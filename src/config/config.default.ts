@@ -11,6 +11,18 @@ export default (appInfo: MidwayAppInfo) => {
     },
   } as MidwayConfig
 
+  config.cors = {
+    credentials: true,
+    allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'SonicToken', 'FTAToken', 'x-page-url'],
+    origin: ({ ctx }: any) => {
+      return ctx.header.origin
+    },
+    exposeHeaders: '*',
+    keepHeadersOnError: true,
+    maxAge: 6000,
+  }
+
   const filesCachePath = path.join(appInfo.baseDir, '..', 'files-cache')
   const dbPath = path.join(appInfo.baseDir, '..', 'db')
 
@@ -24,7 +36,7 @@ export default (appInfo: MidwayAppInfo) => {
     buffer: true,
     dirs: {
       default: {
-        prefix: '/filesCache',
+        prefix: '/files-cache',
         dir: filesCachePath,
       },
     },
