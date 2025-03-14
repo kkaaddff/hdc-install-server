@@ -23,6 +23,16 @@ export default (appInfo: MidwayAppInfo) => {
     maxAge: 6000,
   }
 
+  config.midwayLogger = {
+    default: {
+      transports: {
+        console: {
+          autoColors: false,
+        },
+      },
+    },
+  }
+
   const filesCachePath = path.join(appInfo.baseDir, '..', 'files-cache')
   const dbPath = path.join(appInfo.baseDir, '..', 'db')
 

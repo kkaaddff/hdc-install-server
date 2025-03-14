@@ -37,7 +37,7 @@ export class InstallService {
         const extractDir = path.dirname(zipFilePath)
 
         // Create extraction directory if it doesn't exist
-        if (!fs.existsSync(extractDir)) {
+        if (!fs.existsSync(path.join(extractDir, path.basename(installDto.downloadUrl, '.zip')))) {
           // Extract the zip file
           console.log(`Extracting ${zipFilePath} to ${extractDir}`)
           await extract(zipFilePath, { dir: extractDir })
