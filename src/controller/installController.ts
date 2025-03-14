@@ -5,7 +5,7 @@ import { InstallAppDTO } from '../interface'
 import { InstallService } from '../service/installService'
 import { BuildController } from './buildController'
 
-@Controller('/api')
+@Controller('/harmony')
 export class InstallController {
   @Inject()
   ctx: Context
@@ -37,5 +37,14 @@ export class InstallController {
       count: cacheInfo.length,
       files: cacheInfo,
     }
+  }
+
+  /**
+   * Get information about the lock status
+   */
+  @Get('/lock-status')
+  async getLockStatus() {
+    const lockInfo = this.installService.getLockStatus()
+    return lockInfo
   }
 }
