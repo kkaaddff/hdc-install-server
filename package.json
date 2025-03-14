@@ -25,6 +25,7 @@
     "@midwayjs/static-file": "^3.0.0",
     "@midwayjs/swagger": "^3.0.0",
     "@midwayjs/validate": "^3.20.3",
+    "@midwayjs/cross-domain": "^3.11.15",
     "axios": "^1.8.3",
     "fs-extra": "^10.1.0",
     "pm2": "^5.4.3",

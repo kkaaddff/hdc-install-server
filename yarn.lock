@@ -668,6 +668,13 @@
     picomatch "2.3.1"
     reflect-metadata "0.2.2"
 
+"@midwayjs/cross-domain@^3.11.15":
+  version "3.20.3"
+  resolved "https://npm.amh-group.com/@midwayjs%2fcross-domain/-/cross-domain-3.20.3.tgz#ad2c4c9732ddc2cfcaeea2c9a06010ff32a0b4cc"
+  integrity sha512-dPacqAIDz2KNxDxcyGLUgHmBwYgYG2dZWY5opoyxJYA8OefqJoz3xKdyidGFWm7f6bBtPYkTIxPy8jLgwylLmw==
+  dependencies:
+    vary "1.1.2"
+
 "@midwayjs/decorator@^3.20.3":
   version "3.20.3"
   resolved "https://npm.amh-group.com/@midwayjs%2fdecorator/-/decorator-3.20.3.tgz#c479433b89031d48702ab18189229018e317b476"
@@ -6358,7 +6365,7 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vary@^1.1.2:
+vary@1.1.2, vary@^1.1.2:
   version "1.1.2"
   resolved "https://npm.amh-group.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
