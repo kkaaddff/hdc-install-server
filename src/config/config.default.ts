@@ -1,6 +1,7 @@
 import { MidwayAppInfo, MidwayConfig } from '@midwayjs/core'
 import fse from 'fs-extra'
 import path from 'path'
+import { readFileSync } from 'fs'
 
 export default (appInfo: MidwayAppInfo) => {
   const config = {
@@ -8,6 +9,8 @@ export default (appInfo: MidwayAppInfo) => {
     keys: '1683452916943_7754',
     koa: {
       port: 7001,
+      key: readFileSync(path.join(appInfo.appDir, 'ssl/ssl.key')),
+      cert: readFileSync(path.join(appInfo.appDir, 'ssl/ssl.pem')),
     },
   } as MidwayConfig
 

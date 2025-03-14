@@ -15,7 +15,7 @@ export class HdcUtil {
     try {
       const { stdout, stderr } = await execAsync(command, {
         timeout,
-        shell:"/bin/zsh"
+        shell: '/bin/zsh',
       })
 
       if (stderr) {
